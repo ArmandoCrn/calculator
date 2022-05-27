@@ -119,12 +119,10 @@ body {
   padding: 0.5rem 1rem;
 }
 
-.hidden {
-  visibility: hidden;
-}
-
 #espression {
-  margin-bottom: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.8rem;
+  min-height: 32px;
 }
 
 .input-btn {
