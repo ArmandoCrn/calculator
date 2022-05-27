@@ -1,29 +1,35 @@
 :root {
   --white: #eee;
   --black: #212121;
-  --grey: #747474;
+  --grey: #939393;
+  --btn-hover: #ddd;
+  --btn-active: #ccc;
+  --red: #faa;
+  --red-hover: #e99;
+  --red-active: #d88;
+  --azure: #76bbff;
+  --azure-hover: #62b1ff;
+  --azure-active: #4da6ff;
+  --orange: #ffaa55;
+  --orange-hover: #f3973c;
+  --orange-active: #ff8f1e;
+  --green: #52e088;
+  --green-hover: #2fda71;
+  --green-active: #0cd359;
 
+  /*
   --color1: #e2592f;
   --color2: #dd1964;
   --color3: #0faee7;
-  --color4: #16d861;
-
   --background: #f6f6f6;
   --font: #222;
   --border: #333;
   --screen: #eee;
   --calculator: #aaa;
-  --btn: #eee;
-  --btn-hover: #ddd;
-  --btn-active: #ccc;
-  --btn-red: #faa;
-  --btn-red-hover: #e99;
-  --btn-red-active: #d88;
   --purple: #aaf;
   --purple-hover: #99e;
   --purple-active: #88d;
-
-  --other: #056571;
+  */
 }
 
 /*==========
@@ -113,6 +119,10 @@ body {
   padding: 0.5rem 1rem;
 }
 
+.hidden {
+  visibility: hidden;
+}
+
 #espression {
   margin-bottom: 1rem;
 }
@@ -126,12 +136,66 @@ body {
 
 .btn {
   padding: 1.2rem 1rem;
-
   cursor: pointer;
+}
+
+#clear {
+  background-color: var(--red);
+}
+
+#delete {
+  background-color: var(--azure);
+}
+
+.btn.operator {
+  background-color: var(--orange);
 }
 
 #equal {
   grid-column: span 2;
+  background-color: var(--green);
+}
+
+/* -- BTN ACTION -- */
+
+#clear:hover {
+  background-color: var(--red-hover);
+}
+
+#clear:active {
+  background-color: var(--red-active);
+}
+
+#delete:hover {
+  background-color: var(--azure-hover);
+}
+
+#delete:active {
+  background-color: var(--azure-active);
+}
+
+.btn.operator:hover {
+  background-color: var(--orange-hover);
+}
+
+.btn.operator:active {
+  background-color: var(--orange-active);
+}
+
+#equal:hover {
+  background-color: var(--green-hover);
+}
+
+#equal:active {
+  background-color: var(--green-active);
+}
+
+.btn.number:hover {
+  background-color: var(--btn-hover);
+}
+
+.btn.number:active {
+  background-color: var(--btn-active);
 }
 
 /* -- FOOTER -- */
