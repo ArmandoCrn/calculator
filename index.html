@@ -14,43 +14,65 @@
 
     <!-- JavaScript -->
     <script src="script.js" defer></script>
+
+    <!-- FONT: ROBOTO -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- FONTAWESOME - ICON -->
+    <script
+      src="https://kit.fontawesome.com/faff2b4ada.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
 
   <body>
-    <header class="header"><h1>Calculator</h1></header>
-
     <main class="main">
-      <section class="display">
-        <p id="espression"></p>
-        <p id="input-number"></p>
-      </section>
+      <div class="calc">
+        <section class="display">
+          <p id="espression"></p>
+          <p id="input-number"></p>
+        </section>
 
-      <section class="input-btn">
-        <button class="btn" id="clear">Clear</button>
-        <button class="btn" id="delete">Delete</button>
+        <section class="input-btn">
+          <button class="btn" id="clear">Clear</button>
+          <button class="btn" id="delete">Delete</button>
+          <button class="btn" id="negative-positive">+/-</button>
+          <button class="btn operator">÷</button>
 
-        <button class="btn number">7</button>
-        <button class="btn number">8</button>
-        <button class="btn number">9</button>
-        <button class="btn operator">÷</button>
+          <button class="btn number">7</button>
+          <button class="btn number">8</button>
+          <button class="btn number">9</button>
+          <button class="btn operator">x</button>
 
-        <button class="btn number">4</button>
-        <button class="btn number">5</button>
-        <button class="btn number">6</button>
-        <button class="btn operator">x</button>
+          <button class="btn number">4</button>
+          <button class="btn number">5</button>
+          <button class="btn number">6</button>
+          <button class="btn operator">-</button>
 
-        <button class="btn number">1</button>
-        <button class="btn number">2</button>
-        <button class="btn number">3</button>
-        <button class="btn operator">-</button>
+          <button class="btn number">1</button>
+          <button class="btn number">2</button>
+          <button class="btn number">3</button>
+          <button class="btn operator">+</button>
 
-        <button class="btn number" id="point">.</button>
-        <button class="btn number">0</button>
-        <button class="btn operator">=</button>
-        <button class="btn operator">+</button>
-      </section>
+          <button class="btn number">0</button>
+          <button class="btn number" id="point">.</button>
+          <button class="btn operator" id="equal">=</button>
+        </section>
+      </div>
     </main>
 
-    <footer class="footer"></footer>
+    <footer class="footer">
+      <p>
+        Copyright &copy; 2022 ArmandoCrn
+        <a href="https://github.com/ArmandoCrn" id="logo">
+          <i class="fa-brands fa-github"></i>
+        </a>
+      </p>
+    </footer>
   </body>
 </html>

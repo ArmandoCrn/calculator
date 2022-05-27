@@ -22,6 +22,8 @@ e di operator
 
 
   FIXME: prevenire che si rompa il tutto quando mettono troppi numeri;
+  FIXME: prevenire che quando premi 34098 volte uguale non succede nulla e solo
+  la prima volta esegue il task;
 */
 
 // || COMPONENT ||
@@ -30,6 +32,7 @@ const inputNumber = document.querySelector("#input-number");
 
 const clear = document.querySelector("#clear");
 const cancel = document.querySelector("#delete");
+const positiveOrNot = document.querySelector("#negative-positive");
 
 const numbers = document.querySelectorAll(".number");
 const operators = document.querySelectorAll(".operator");
