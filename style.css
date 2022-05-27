@@ -111,7 +111,7 @@ body {
 .display,
 .btn {
   border: 2px solid var(--black);
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 .display {
@@ -145,7 +145,8 @@ body {
   background-color: var(--azure);
 }
 
-.btn.operator {
+.btn.operator,
+#negative-positive {
   background-color: var(--orange);
 }
 
@@ -172,11 +173,13 @@ body {
   background-color: var(--azure-active);
 }
 
-.btn.operator:hover {
+.btn.operator:hover,
+#negative-positive:hover {
   background-color: var(--orange-hover);
 }
 
-.btn.operator:active {
+.btn.operator:active,
+#negative-positive:active {
   background-color: var(--orange-active);
 }
 
