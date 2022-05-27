@@ -1,5 +1,29 @@
 :root {
-  --white: #f6f6f6;
+  --white: #eee;
+  --black: #212121;
+  --grey: #747474;
+
+  --color1: #e2592f;
+  --color2: #dd1964;
+  --color3: #0faee7;
+  --color4: #16d861;
+
+  --background: #f6f6f6;
+  --font: #222;
+  --border: #333;
+  --screen: #eee;
+  --calculator: #aaa;
+  --btn: #eee;
+  --btn-hover: #ddd;
+  --btn-active: #ccc;
+  --btn-red: #faa;
+  --btn-red-hover: #e99;
+  --btn-red-active: #d88;
+  --purple: #aaf;
+  --purple-hover: #99e;
+  --purple-active: #88d;
+
+  --other: #056571;
 }
 
 /*==========
@@ -20,10 +44,10 @@ html {
 body {
   margin: 0;
   padding: 0;
-  background-color: var(--white);
   display: flex;
   flex-direction: column;
   min-height: 100%;
+  background-color: var(--white);
 }
 
 p {
@@ -39,14 +63,78 @@ a {
   TYPOGRAPHY
 ============*/
 
+body {
+  font-family: Roboto, sans-serif;
+}
+
+.display {
+  text-align: end;
+}
+
+#espression {
+  font-size: 1.3rem;
+}
+
+#input-number {
+  font-size: 2.5rem;
+}
+
+.btn {
+  font-size: 1.4rem;
+}
+
 /*==========
   SPECIFIC
 ==========*/
 
 /* -- MAIN --  */
 .main {
-  /* d */
+  margin-top: 2rem;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
 }
+
+.calc {
+  width: 400px;
+  background-color: var(--grey);
+  padding: 1rem;
+}
+
+.calc,
+.display,
+.btn {
+  border: 2px solid var(--black);
+  border-radius: 5px;
+}
+
+.display {
+  background-color: var(--white);
+  padding: 0.5rem 1rem;
+}
+
+#espression {
+  margin-bottom: 1rem;
+}
+
+.input-btn {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.2rem;
+  margin-block: 1rem;
+}
+
+.btn {
+  padding: 1.2rem 1rem;
+
+  cursor: pointer;
+}
+
+#equal {
+  grid-column: span 2;
+}
+
+/* -- FOOTER -- */
 
 .footer {
   margin-top: auto;
