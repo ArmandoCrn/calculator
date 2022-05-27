@@ -6,14 +6,40 @@ nel console.log
 poi
 dove l'user può inserire i numeri
 
+QUANDO crei i btn click per i tasti
+prendi il textcontent o quel che è per mettere il numero al
+senza che crei un btn click per ogni tasto per il valore, ne fai uno unico
+che va a prendere il valore
+fai un querySelectorAll di tutti i .number e for each metti un click che prende appunto il valore
+numbers.innerText
 
+stessa cosa per l'operatore che si va a selezionare
+
+i quali poi andranno a essere messi allinterno di firstN
+secondN
+e di operator
   "÷"
 
+
+  FIXME: prevenire che si rompa il tutto quando mettono troppi numeri;
 */
 
-let firstN = 15;
-let secondN = 5;
-result = 0;
+// || COMPONENT ||
+const espression = document.querySelector("#espression");
+const inputNumber = document.querySelector("#input-number");
+
+const clear = document.querySelector("#clear");
+const cancel = document.querySelector("#delete");
+
+const numbers = document.querySelectorAll(".number");
+const operators = document.querySelectorAll(".operator");
+
+console.log(operators);
+
+let x = 15;
+let y = 5;
+let operator = "";
+let result = 0;
 
 function sum(x, y) {
   result = x + y;
@@ -48,9 +74,9 @@ function operate(x, y, operator) {
     case "/":
       div(x, y);
       break;
+
+    case "=":
+      "boh";
+      break;
   }
 }
-
-console.log(result);
-operate(firstN, secondN, "%");
-console.log(result);
