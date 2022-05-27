@@ -200,4 +200,15 @@ body {
 
 .footer {
   margin-top: auto;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.fa-github {
+  margin-left: 0.5rem;
+  transition: transform 0.2s ease-in-out;
+}
+
+.fa-github:hover {
+  transform: scale(1.4) translateY(-0.3rem);
 }
