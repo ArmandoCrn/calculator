@@ -78,7 +78,7 @@ body {
 }
 
 #expression {
-  font-size: 1.3rem;
+  font-size: 1.1rem;
 }
 
 #input-number {
@@ -128,7 +128,7 @@ body {
 }
 
 #expression {
-  padding-block: 0.6rem;
+  margin-top: 0.6rem;
   min-height: 32px;
 }
 
@@ -157,7 +157,7 @@ body {
   background-color: var(--orange);
 }
 
-#equal {
+#equals {
   grid-column: span 2;
   background-color: var(--green);
 }
@@ -190,11 +190,11 @@ body {
   background-color: var(--orange-active);
 }
 
-#equal:hover {
+#equals:hover {
   background-color: var(--green-hover);
 }
 
-#equal:active {
+#equals:active {
   background-color: var(--green-active);
 }
 
