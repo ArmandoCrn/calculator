@@ -28,7 +28,9 @@ premuto dovrà mettere il suo innerText allinterno della variabile operator
   cioè il risultato della precedente operazione
 
   2.4 - FIXME: (Avanzata) L'inputNumber potrà essere formato solo da un tot di cifre massimo 4/5 coppie di 3 numeri, altrimenti
-  manda tutta la grafica a quel paese
+  manda tutta la grafica a quel paese, in realtà bisogna anche poi controllare il risultato che esce, e quindi magari rendere un po'
+  adattabile lo schermo superiore, nonostante abbiamo messo già una lunghezza massima a temp di 15 caratteri. Si potrebbe anche vedere come
+  si formattano i caratteri con la e, che non so come si fa, bisogna controllare
 
 3 - Quando premiamo = la seconda stringa che abbiamo creato in temp dovrà essere passata sotto forma di numero ad y,
 e chiamerà la funzione operazione che andrà a chiamare la x la y e l'operatore che abbiamo già salvato,
@@ -45,6 +47,8 @@ Quello che succederà a schermo sarà il result che compare nel nostro inputNumb
 
 5 - FIXME: (Avanzata)Quando premiamo il punto devo capire come avere a che fare con i numeri con la virgola (non so se c'è bisogno di costruire
 una funzione al click solo per lui, e di conseguenza rimuovere la clas number nell'html e aggiustare anche il css)
+
+  5.1 Si può premere solamente una volta il punto, lasciare così per quanto riguarda la length dei numeri comparsi a schermo
 
 
 
@@ -65,7 +69,7 @@ e di operator
 */
 
 // || COMPONENT ||
-const espression = document.querySelector("#espression");
+const expression = document.querySelector("#expression");
 const inputNumber = document.querySelector("#input-number");
 
 const clear = document.querySelector("#clear");
@@ -76,11 +80,46 @@ const equal = document.querySelector("#equal");
 const numbers = document.querySelectorAll(".number");
 const operators = document.querySelectorAll(".operator");
 
+// Click AC
+//Praticamente va a resettare sia temp, che n1 e n2 in stringe vuote
+
+// Click C
+// Va a modificare il nostro temp, e quindi ritorniamo un temp.slice(0, temp.length - 1), cioè ogni volta va a togliere l'ultimo numero a temp
+
+// Click btn numbers
+numbers.forEach((number) => number.addEventListener("click", numberClick));
+
+// Click btn operator
+operators.forEach((operator) => operator.addEventListener("click", operatorClick));
+
 let n1 = "";
 let n2 = "";
 let temp = "";
 let operator = "";
 let result = 0;
+
+function numberClick(e) {
+  if (temp.length < 15) {
+    temp += e.target.innerText;
+
+    inputNumber.innerText = temp;
+  }
+}
+
+//FIXME: Aggiungere le funzioni avanzate del completare l'operazione anche quando premiamo
+//di nuovo il tasto dell'operatore, e non solo quando premiamo uguale, immagino si faccia con un if (n2),
+//e cioè se n2 non sarà più una stringa vuota e quindi diventerà true;
+function operatorClick(e) {
+  // If n1 === ""; (col ! davanti, il false value si tramuta in true e viceversa)
+  if (!n1) {
+    n1 = +temp;
+  }
+
+  temp = "";
+  operator = e.target.innerText;
+
+  expression.innerText = `${n1} ${operator}`;
+}
 
 function sum(x, y) {
   result = x + y;
