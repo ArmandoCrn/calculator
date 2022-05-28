@@ -52,19 +52,9 @@ una funzione al click solo per lui, e di conseguenza rimuovere la clas number ne
 
 
 
-QUANDO crei i btn click per i tasti
-prendi il textcontent o quel che è per mettere il numero al
-senza che crei un btn click per ogni tasto per il valore, ne fai uno unico
-che va a prendere il valore
-fai un querySelectorAll di tutti i .number e for each metti un click che prende appunto il valore
-numbers.innerText
-
-stessa cosa per l'operatore che si va a selezionare
-
-i quali poi andranno a essere messi allinterno di firstN
-secondN
-e di operator
-
+6 - TODO: Refactoring del progetto, e cioè vado a creare una funzione un po' più grande che prende diversi input,
+in base all'input andrà a chiamare una funzione, così che non ripeteremo ogni volta il expression/inputNumber.innerText;
+LESS IS MORE. Don'tRepeatYourself, DRY, DRY!
   
 */
 
@@ -80,17 +70,28 @@ const equal = document.querySelector("#equal");
 const numbers = document.querySelectorAll(".number");
 const operators = document.querySelectorAll(".operator");
 
-// Click AC
+// Click btn AC
 //Praticamente va a resettare sia temp, che n1 e n2 in stringe vuote
 
-// Click C
-// Va a modificare il nostro temp, e quindi ritorniamo un temp.slice(0, temp.length - 1), cioè ogni volta va a togliere l'ultimo numero a temp
+// Click btn C
+cancel.addEventListener("click", deleteTemp);
 
 // Click btn numbers
 numbers.forEach((number) => number.addEventListener("click", numberClick));
 
 // Click btn operator
 operators.forEach((operator) => operator.addEventListener("click", operatorClick));
+
+// Click btn equal
+equal.addEventListener("click", equalClick);
+
+function equalClick() {
+  n2 = temp;
+  operate(n1, n2, operator);
+
+  expression.innerText = `${n1} ${operator} ${n2} =`;
+  inputNumber.innerText = result;
+}
 
 let n1 = "";
 let n2 = "";
@@ -106,11 +107,26 @@ function numberClick(e) {
   }
 }
 
+function deleteTemp() {
+  // Equivale a (temp !== ""), perche "" === false, e quindi quando conterrà qualcosa, diverrà true
+  if (temp) {
+    let lastN = temp.length - 1;
+    temp = temp.slice(0, lastN);
+
+    if (temp.length === 0) {
+      inputNumber.innerText = 0;
+    } else {
+      inputNumber.innerText = temp;
+    }
+  }
+}
+
 //FIXME: Aggiungere le funzioni avanzate del completare l'operazione anche quando premiamo
 //di nuovo il tasto dell'operatore, e non solo quando premiamo uguale, immagino si faccia con un if (n2),
 //e cioè se n2 non sarà più una stringa vuota e quindi diventerà true;
 function operatorClick(e) {
-  // If n1 === ""; (col ! davanti, il false value si tramuta in true e viceversa)
+  // if (!n1) === (n1 === ""); (col ! davanti, il false value si tramuta in true e viceversa)
+  // Quando una stringa vuota viene trasformata in un numero, diventa 0
   if (!n1) {
     n1 = +temp;
   }
