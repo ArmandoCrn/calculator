@@ -198,11 +198,13 @@ body {
   background-color: var(--green-active);
 }
 
-.btn.number:hover {
+.btn.number:hover,
+#point:hover {
   background-color: var(--btn-hover);
 }
 
-.btn.number:active {
+.btn.number:active,
+#point:active {
   background-color: var(--btn-active);
 }
 

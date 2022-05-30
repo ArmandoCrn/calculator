@@ -1,19 +1,11 @@
 /*
 TODO:
 
-1 - FIXME: (Avanzata)Quando premiamo il +/- trasforma il nostro risultato, IN TEORIA L'HO FATTO CONTROLLARE DOMANI SE TUTTO FUNZIONA FINO A QUESTO PUNTO
-
-2 - FIXME: (Avanzata)Quando premiamo il punto devo capire come avere a che fare con i numeri con la virgola (non so se c'è bisogno di costruire
-una funzione al click solo per lui, e di conseguenza rimuovere la clas number nell'html e aggiustare anche il css)
-
-  2.1 Si può premere solamente una volta il punto, lasciare così per quanto riguarda la length dei numeri comparsi a schermo (.includes)
-
-
-3 - Per la mappatura dei tasti, fai funzionare solo quelli che servono alla calcolatrice: i numeri da 0 a 9, ESC === AC, DELETE ARROW === DELETE.
+2 - Per la mappatura dei tasti, fai funzionare solo quelli che servono alla calcolatrice: i numeri da 0 a 9, ESC === AC, DELETE ARROW === DELETE.
   i segni matematici, e ENTER === uguale
 
 
-4 - TODO: Refactoring del progetto, e cioè vado a creare una funzione un po' più grande che prende diversi input,
+3 - TODO: Refactoring del progetto, e cioè vado a creare una funzione un po' più grande che prende diversi input,
   in base all'input andrà a chiamare una funzione, così che non ripeteremo ogni volta il expression/inputNumber.innerText;
   LESS IS MORE. Don'tRepeatYourself, DRY, DRY!
 
@@ -40,21 +32,37 @@ const clear = document.querySelector("#clear");
 const cancel = document.querySelector("#delete");
 const positiveOrNot = document.querySelector("#negative-positive");
 const equals = document.querySelector("#equals");
+const point = document.querySelector("#point");
 
 const numbers = document.querySelectorAll(".number");
 const operators = document.querySelectorAll(".operator");
 
 // Click btn AC
 clear.addEventListener("click", clearAll);
-//Praticamente va a resettare sia temp, che n1 e n2 in stringe vuote
 
 // Click btn C
 cancel.addEventListener("click", deleteTemp);
 
+// Click btn +/-
 positiveOrNot.addEventListener("click", positive_negative);
 
 // Click btn numbers
 numbers.forEach((number) => number.addEventListener("click", numberClick));
+
+// Click btn .
+point.addEventListener("click", pointClick);
+
+function pointClick(e) {
+  if (temp.length < 13 && !temp.includes(".")) {
+    if (temp === "") {
+      temp += "0" + e.target.innerText;
+    } else {
+      temp += e.target.innerText;
+    }
+
+    inputNumber.innerText = temp;
+  }
+}
 
 // Click btn operator
 operators.forEach((operator) => operator.addEventListener("click", operatorClick));
@@ -70,7 +78,7 @@ let result = 0;
 let resultChecker = false;
 
 function numberClick(e) {
-  if (temp.length < 14) {
+  if (temp.length < 13) {
     temp += e.target.innerText;
 
     inputNumber.innerText = temp;
@@ -140,10 +148,27 @@ function equalsClick() {
 
     let stringResult = String(result);
 
-    if (stringResult.length > 13 && operator === "÷") {
-      result = Math.round(result * 1000) / 1000;
-    } else if (stringResult.length > 12) {
+    if (stringResult.length > 12 && operator === "×") {
+      // Arrotondiamo il numero se contiene il . dato che i numeri molto grandi hanno il . nel result
+      if (stringResult.includes(".")) {
+        result = Math.round(result * 1000) / 1000;
+      }
+
+      // Qui trasformiamo in un numero con la e (notazione scientifica)
       result = result.toExponential(4);
+    } else if (stringResult.length > 12 && operator === "+") {
+      // Per evitare che un n basso col . + n faccia un numero in notazione scientifica
+      if (stringResult.includes(".")) {
+        result = Math.round(result * 1000) / 1000;
+      }
+
+      // Rende il risultato in notazione scentifica
+      if (stringResult.indexOf("." > 3)) {
+        result = result.toExponential(4);
+      }
+    } else if (stringResult.length > 12 && stringResult.includes(".")) {
+      // Invece qui si tratta se sono divisioni o sottrazioni, arrotondiamo solamente
+      result = Math.round(result * 1000) / 1000;
     }
 
     expression.innerText = `${n1} ${operator} ${n2} =`;
@@ -158,6 +183,7 @@ function equalsClick() {
 }
 
 function positive_negative() {
+  //Per farlo funzionare regolarmente
   if (temp !== "") {
     if (!temp.includes("-")) {
       temp = "-" + temp;
@@ -167,6 +193,8 @@ function positive_negative() {
 
     inputNumber.innerText = temp;
   } else if (resultChecker) {
+    // Per farlo funzionare trasformando il risultato,
+    //ma funziona solo una volta grazie al resultChecker
     n1 = String(n1);
     resultChecker = false;
 
