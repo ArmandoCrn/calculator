@@ -4,6 +4,8 @@ TODO:
 2 - Per la mappatura dei tasti, fai funzionare solo quelli che servono alla calcolatrice: i numeri da 0 a 9, ESC === AC, DELETE ARROW === DELETE.
   i segni matematici, e ENTER === uguale
 
+  2.1 FIXME: Come tolgo l'alone di focus quando premo enter?
+
 */
 
 // || COMPONENTS ||
@@ -40,10 +42,52 @@ operators.forEach((operator) => operator.addEventListener("click", operatorClick
 // Click btn equals
 equals.addEventListener("click", equalsClick);
 
+// Funzionamento tastiera
+window.addEventListener("keydown", keybordOperations);
+
+function keybordOperations(e) {
+  //FIXME:
+  e.preventDefault();
+
+  if (e.key >= 0 && e.key <= 9) {
+    numberClick(e);
+  }
+
+  switch (e.key) {
+    case "=":
+    case "Enter":
+      equalsClick();
+      break;
+
+    case "Backspace":
+      deleteTemp();
+      break;
+
+    case "Escape":
+      clearAll();
+      break;
+
+    //FIXME:
+    case ".":
+      "cose";
+      break;
+    //FIXME:
+    case "F9":
+      console.log("oauhydsgf");
+      break;
+
+    case "+":
+    case "-":
+    case "*":
+    case "/":
+      operatorClick(e);
+  }
+}
+
 let n1 = "";
 let n2 = "";
 let temp = "";
-let result = 0;
+let result = null;
 let operator = "";
 let resultChecker = false;
 
@@ -67,20 +111,16 @@ function setOperator(value) {
   operator = value;
 }
 
+function setResultChecker(value) {
+  resultChecker = value;
+}
+
 function setExpressionTxt(txt) {
   expression.innerText = txt;
 }
 
 function setInputNumberTxt(txt) {
   inputNumber.innerText = txt;
-}
-
-function numberClick(e) {
-  if (temp.length < 13) {
-    temp += e.target.innerText;
-
-    setInputNumberTxt(temp);
-  }
 }
 
 function deleteTemp() {
@@ -101,33 +141,67 @@ function clearAll() {
   setN1("");
   setN2("");
   setTemp("");
-  setResult(0);
+  setResult(null);
   setOperator("");
 
   setExpressionTxt("");
   setInputNumberTxt(0);
 }
 
+function numberClick(e) {
+  if (result !== null) {
+    setResult(null);
+  }
+
+  // FIXME:
+  console.log({ n1, n2, temp, result, operator, resultChecker });
+
+  // setExpressionTxt("");
+
+  if (temp.length < 13) {
+    //se result !== null cancella expression text
+    if (e.type === "click") {
+      temp += e.target.innerText;
+    } else {
+      temp += e.key;
+    }
+
+    setInputNumberTxt(temp);
+  }
+}
+
 function operatorClick(e) {
+  if (operator !== "" && !resultChecker) {
+    setN1(result);
+    equalsClick();
+  }
+
   // Quando una stringa vuota viene trasformata in un numero, diventa 0
   if (n1 === "") {
     setN1(+temp);
   }
 
-  if (operator !== "") {
-    equalsClick();
+  setTemp("");
+  setResultChecker(false);
+
+  if (e.type === "click") {
+    setOperator(e.target.innerText);
+  } else {
+    setOperator(e.key);
+    convertOperator(operator);
   }
 
-  // if e.target.innertext === operator return
-  setTemp("");
-  setOperator(e.target.innerText);
-
-  setExpressionTxt(`${n1} ${operator}`);
-  setInputNumberTxt(0);
+  //FIXME:
+  console.log({ n1, n2, temp, result, operator, resultChecker });
+  // setExpressionTxt(`${n1} ${operator}`);
+  // setInputNumberTxt(0);
 }
 
 function equalsClick() {
-  if (n1 !== "" && temp !== "") {
+  //FIXME:
+  console.log({ n1, n2, temp, result, operator, resultChecker });
+
+  if (temp !== "" && operator !== "") {
     setN2(+temp);
 
     if (n2 === 0 && operator === "÷") {
@@ -143,13 +217,13 @@ function equalsClick() {
     setExpressionTxt(`${n1} ${operator} ${n2} =`);
     setInputNumberTxt(result);
 
-    setN1(result);
+    setN1("");
     setN2("");
     setTemp("");
-    setResult(0);
-    setOperator("");
+    // setResult();
+    // setOperator("");
 
-    // Serve per aggiungere il punto al result
+    // Serve per aggiungere il +/- al result
     resultChecker = true;
   }
 }
@@ -160,24 +234,24 @@ function roundAndExponential(operator) {
   if (stringResult.length > 12 && operator === "×") {
     // Arrotondiamo il numero se contiene il . dato che i numeri molto grandi hanno il . nel result
     if (stringResult.includes(".")) {
-      result = Math.round(result * 1000) / 1000;
+      setResult(Math.round(result * 1000) / 1000);
     }
 
     // Qui trasformiamo in un numero con la e (notazione scientifica)
-    result = result.toExponential(4);
+    setResult(result.toExponential(4));
   } else if (stringResult.length > 12 && operator === "+") {
     // Per evitare che un n basso col . + n faccia un numero in notazione scientifica
     if (stringResult.includes(".")) {
-      result = Math.round(result * 1000) / 1000;
+      setResult(Math.round(result * 1000) / 1000);
     }
 
     // Rende il risultato in notazione scentifica
     if (stringResult.indexOf("." > 3)) {
-      result = result.toExponential(4);
+      setResult(result.toExponential(4));
     }
   } else if (stringResult.length > 12 && stringResult.includes(".")) {
     // Invece qui si tratta se sono divisioni o sottrazioni, arrotondiamo solamente
-    result = Math.round(result * 1000) / 1000;
+    setResult(Math.round(result * 1000) / 1000);
   }
 }
 
@@ -192,7 +266,7 @@ function pointClick(e) {
     setInputNumberTxt(temp);
   }
 }
-
+//FIXME:
 function positive_negative() {
   //Per farlo funzionare regolarmente
   if (temp !== "") {
@@ -220,19 +294,31 @@ function positive_negative() {
 }
 
 function sum(x, y) {
-  result = x + y;
+  setResult(x + y);
 }
 
 function sub(x, y) {
-  result = x - y;
+  setResult(x - y);
 }
 
 function mult(x, y) {
-  result = x * y;
+  setResult(x * y);
 }
 
 function div(x, y) {
-  result = x / y;
+  setResult(x / y);
+}
+
+function convertOperator(operator) {
+  switch (operator) {
+    case "*":
+      setOperator("×");
+      break;
+
+    case "/":
+      setOperator("÷");
+      break;
+  }
 }
 
 function operate(x, y, operator) {
