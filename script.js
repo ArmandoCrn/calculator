@@ -124,11 +124,12 @@ function setInputNumberTxt(txt) {
 }
 
 function deleteTemp() {
-  // Equivale a (temp !== ""), perche "" === false, e quindi quando conterrà qualcosa, diverrà true
+  // Equivale a (temp !== "" && temp), perche "" === false, e quindi quando conterrà qualcosa, diverrà true
   if (temp) {
     let lastN = temp.length - 1;
     setTemp(temp.slice(0, lastN));
 
+    // Solo visivo
     if (temp.length === 0) {
       setInputNumberTxt(0);
     } else {
@@ -143,90 +144,187 @@ function clearAll() {
   setTemp("");
   setResult(null);
   setOperator("");
+  // setResultChecker(false);
 
   setExpressionTxt("");
   setInputNumberTxt(0);
 }
 
+// function numberClick(e) {
+//   if (result !== null) {
+//     setResult(null);
+//   }
+
+//   // FIXME:
+//   console.log({ n1, n2, temp, result, operator, resultChecker });
+
+//   // setExpressionTxt("");
+
+//   if (temp.length < 13) {
+//     //se result !== null cancella expression text
+//     if (e.type === "click") {
+//       temp += e.target.innerText;
+//     } else {
+//       temp += e.key;
+//     }
+
+//     setInputNumberTxt(temp);
+//   }
+// }
+
 function numberClick(e) {
-  if (result !== null) {
-    setResult(null);
-  }
+  temp += e.target.innerText;
 
-  // FIXME:
-  console.log({ n1, n2, temp, result, operator, resultChecker });
-
-  // setExpressionTxt("");
-
-  if (temp.length < 13) {
-    //se result !== null cancella expression text
-    if (e.type === "click") {
-      temp += e.target.innerText;
-    } else {
-      temp += e.key;
-    }
-
-    setInputNumberTxt(temp);
-  }
+  console.log(temp);
+  console.log({ n1, n2, temp, result, operator });
 }
 
 function operatorClick(e) {
-  if (operator !== "" && !resultChecker) {
+  if (resultChecker) {
     setN1(result);
-    equalsClick();
-  }
 
-  // Quando una stringa vuota viene trasformata in un numero, diventa 0
-  if (n1 === "") {
-    setN1(+temp);
+    console.log(n2);
+    setResultChecker(false);
+  } else {
+    // FIXME: Funziona la concatenazione di operazioni quando si fa con uguale, ma quando fai
+    // 3+3 + 5 + 8, non funziona, capisci perchè.
+    if (n1 === "") {
+      setN1(+temp);
+    } else if (n2 === "") {
+      setN2(+temp);
+    }
+
+    if (n1 !== "" && n2 !== "") {
+      equalsClick();
+      setN1(result);
+    }
   }
 
   setTemp("");
-  setResultChecker(false);
+  setOperator(e.target.innerText);
 
-  if (e.type === "click") {
-    setOperator(e.target.innerText);
-  } else {
-    setOperator(e.key);
-    convertOperator(operator);
-  }
-
-  //FIXME:
-  console.log({ n1, n2, temp, result, operator, resultChecker });
-  // setExpressionTxt(`${n1} ${operator}`);
-  // setInputNumberTxt(0);
+  console.log(operator);
+  console.log({ n1, n2, temp, result, operator });
 }
 
+// function operatorClick(e) {
+//   if (n1 === "") {
+//     setN1(+temp);
+//   } else if (n2 === "") {
+//     setN2(+temp);
+//   }
+
+//   if (n2 !== "") {
+//     //Per prendere il risultato e continuare ad operare
+//     if (result !== null) {
+//       setN1(result);
+//       equalsClick();
+
+//       console.log("2.0");
+//     } else {
+//       // Per multiple operazioni concatenate e non abbiamo già fatto un operazione che finisse con uguale
+//       equalsClick();
+//       console.log("2.1");
+//     }
+//   }
+
+// FIXME: problema 1: quando cambiamo operatore scompare tutto
+// }
+
+// CASO 1 - Uguale subito dopo
+
 function equalsClick() {
-  //FIXME:
-  console.log({ n1, n2, temp, result, operator, resultChecker });
-
-  if (temp !== "" && operator !== "") {
+  if (!resultChecker) {
     setN2(+temp);
-
-    if (n2 === 0 && operator === "÷") {
-      alert("You can't divide by 0.");
-      clearAll();
-      return;
-    }
+    setTemp("");
+    setResultChecker(true);
 
     operate(n1, n2, operator);
-
-    roundAndExponential(operator);
-
-    setExpressionTxt(`${n1} ${operator} ${n2} =`);
-    setInputNumberTxt(result);
 
     setN1("");
     setN2("");
     setTemp("");
-    // setResult();
-    // setOperator("");
-
-    // Serve per aggiungere il +/- al result
-    resultChecker = true;
+    setOperator("");
+    console.log(result);
+    console.log({ n1, n2, temp, result, operator });
+  } else {
+    //
   }
 }
+
+// function equalsClick() {
+//   if (n2 === "") {
+//     setN2(+temp);
+//   }
+
+//   setTemp("");
+//   // setResultChecker(true);
+
+//   operate(n1, n2, operator);
+
+//   console.log("4");
+//   console.log({ n1, n2, temp, result, operator });
+
+//   // Quando svuotiamo n1, n2, result e operator ?
+// }
+
+// function operatorClick(e) {
+//   if (operator !== "" && !resultChecker) {
+//     setN1(result);
+//     equalsClick();
+//   }
+
+//   // Quando una stringa vuota viene trasformata in un numero, diventa 0
+//   if (n1 === "") {
+//     setN1(+temp);
+//   }
+
+//   setTemp("");
+//   setResultChecker(false);
+
+//   if (e.type === "click") {
+//     setOperator(e.target.innerText);
+//   } else {
+//     setOperator(e.key);
+//     convertOperator(operator);
+//   }
+
+//   //FIXME:
+//   console.log({ n1, n2, temp, result, operator, resultChecker });
+//   // setExpressionTxt(`${n1} ${operator}`);
+//   // setInputNumberTxt(0);
+// }
+
+// function equalsClick() {
+//   //FIXME:
+//   console.log({ n1, n2, temp, result, operator, resultChecker });
+
+//   if (temp !== "" && operator !== "") {
+//     setN2(+temp);
+
+//     if (n2 === 0 && operator === "÷") {
+//       alert("You can't divide by 0.");
+//       clearAll();
+//       return;
+//     }
+
+//     operate(n1, n2, operator);
+
+//     roundAndExponential(operator);
+
+//     setExpressionTxt(`${n1} ${operator} ${n2} =`);
+//     setInputNumberTxt(result);
+
+//     setN1("");
+//     setN2("");
+//     setTemp("");
+//     // setResult();
+//     // setOperator("");
+
+//     // Serve per aggiungere il +/- al result
+//     resultChecker = true;
+//   }
+// }
 
 function roundAndExponential(operator) {
   let stringResult = String(result);
