@@ -24,6 +24,7 @@ const positiveOrNot = document.querySelector("#negative-positive");
 const equals = document.querySelector("#equals");
 const point = document.querySelector("#point");
 
+const allBtns = document.querySelectorAll(".btn");
 const numbers = document.querySelectorAll(".number");
 const operators = document.querySelectorAll(".operator");
 
@@ -50,6 +51,43 @@ equals.addEventListener("click", equalsClick);
 
 // Funzionamento tastiera
 window.addEventListener("keydown", keybordOperations);
+
+// Remove Focus
+allBtns.forEach((btn) => btn.addEventListener("focus", (e) => e.target.blur()));
+
+let n1 = "";
+let n2 = "";
+let result = null;
+let operator = "";
+let resultChecker = false;
+
+function setN1(value) {
+  n1 = value;
+}
+
+function setN2(value) {
+  n2 = value;
+}
+
+function setResult(value) {
+  result = value;
+}
+
+function setOperator(value) {
+  operator = value;
+}
+
+function setResultChecker(value) {
+  resultChecker = value;
+}
+
+function setExpressionTxt(txt) {
+  expression.innerText = txt;
+}
+
+function setInputNumberTxt(txt) {
+  inputNumber.innerText = txt;
+}
 
 function keybordOperations(e) {
   //FIXME:
@@ -87,40 +125,6 @@ function keybordOperations(e) {
     case "/":
       operatorClick(e);
   }
-}
-
-let n1 = "";
-let n2 = "";
-let result = null;
-let operator = "";
-let resultChecker = false;
-
-function setN1(value) {
-  n1 = value;
-}
-
-function setN2(value) {
-  n2 = value;
-}
-
-function setResult(value) {
-  result = value;
-}
-
-function setOperator(value) {
-  operator = value;
-}
-
-function setResultChecker(value) {
-  resultChecker = value;
-}
-
-function setExpressionTxt(txt) {
-  expression.innerText = txt;
-}
-
-function setInputNumberTxt(txt) {
-  inputNumber.innerText = txt;
 }
 
 function deleteClick() {
