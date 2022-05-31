@@ -25,7 +25,7 @@ const operators = document.querySelectorAll(".operator");
 clear.addEventListener("click", clearAll);
 
 // Click btn C
-cancel.addEventListener("click", deleteTemp);
+cancel.addEventListener("click", deleteClick);
 
 // Click btn +/-
 positiveOrNot.addEventListener("click", positive_negative);
@@ -60,7 +60,7 @@ function keybordOperations(e) {
       break;
 
     case "Backspace":
-      deleteTemp();
+      deleteClick();
       break;
 
     case "Escape":
@@ -89,6 +89,7 @@ let n2 = "";
 let result = null;
 let operator = "";
 let resultChecker = false;
+//FIXME: Per ora il resultChecker non viene utilizzato da nessuna parte, se resta così fino alla fine, toglilo
 
 function setN1(value) {
   n1 = value;
@@ -118,17 +119,26 @@ function setInputNumberTxt(txt) {
   inputNumber.innerText = txt;
 }
 
-function deleteTemp() {
-  //FIXME:
-  if (temp) {
-    let lastN = temp.length - 1;
-    setTemp(temp.slice(0, lastN));
+function deleteClick() {
+  if (operator === "" && n1.length > 0) {
+    let lastN = n1.length - 1;
+    setN1(n1.slice(0, lastN));
 
     // Solo visivo
-    if (temp.length === 0) {
+    if (n1.length === 0) {
       setInputNumberTxt(0);
     } else {
-      setInputNumberTxt(temp);
+      setInputNumberTxt(n1);
+    }
+  } else if (operator !== "" && n2.length > 0) {
+    let lastN = n2.length - 1;
+    setN2(n2.slice(0, lastN));
+
+    // Solo visivo
+    if (n2.length === 0) {
+      setInputNumberTxt(0);
+    } else {
+      setInputNumberTxt(n2);
     }
   }
 }
@@ -180,7 +190,7 @@ function numberClick(e) {
   if (resultChecker) {
     setResultChecker(false);
   }
-  console.log({ n1, n2, temp, result, operator });
+  console.log({ n1, n2, result, operator });
 }
 
 function operatorClick(e) {
@@ -192,8 +202,17 @@ function operatorClick(e) {
     setN1(result);
   }
 
-  setOperator(e.target.innerText);
-  console.log({ n1, n2, temp, result, operator });
+  if (n1 === "" && result === null) {
+    setN1("0");
+  }
+
+  if (e.type === "click") {
+    setOperator(e.target.innerText);
+  } else {
+    setOperator(e.key);
+    convertOperator(operator);
+  }
+  console.log({ n1, n2, result, operator });
 }
 
 function equalsClick(e) {
@@ -205,25 +224,9 @@ function equalsClick(e) {
     setOperator("");
     setResultChecker(true);
     console.log(result);
-    console.log({ n1, n2, temp, result, operator });
+    console.log({ n1, n2, result, operator });
   }
 }
-
-// function equalsClick() {
-//   if (n2 === "") {
-//     setN2(+temp);
-//   }
-
-//   setTemp("");
-//   // setResultChecker(true);
-
-//   operate(n1, n2, operator);
-
-//   console.log("4");
-//   console.log({ n1, n2, temp, result, operator });
-
-//   // Quando svuotiamo n1, n2, result e operator ?
-// }
 
 // function operatorClick(e) {
 //   if (operator !== "" && !resultChecker) {
@@ -246,15 +249,13 @@ function equalsClick(e) {
 //     convertOperator(operator);
 //   }
 
-//   //FIXME:
-//   console.log({ n1, n2, temp, result, operator, resultChecker });
+//
 //   // setExpressionTxt(`${n1} ${operator}`);
 //   // setInputNumberTxt(0);
 // }
 
 // function equalsClick() {
-//   //FIXME:
-//   console.log({ n1, n2, temp, result, operator, resultChecker });
+//
 
 //   if (temp !== "" && operator !== "") {
 //     setN2(+temp);
