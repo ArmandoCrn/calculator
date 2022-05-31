@@ -177,18 +177,24 @@ function clearAll() {
 // }
 
 function numberClick(e) {
+  // Primo numero
   if (operator === "" && n1.length < 13) {
     if (e.type === "click") {
       n1 += e.target.innerText;
     } else {
       n1 += e.key;
     }
+
+    setInputNumberTxt(n1);
+    // Secondo numero
   } else if (operator !== "" && n2.length < 13) {
     if (e.type === "click") {
       n2 += e.target.innerText;
     } else {
       n2 += e.key;
     }
+
+    setInputNumberTxt(n2);
   }
 
   if (result !== null) {
@@ -220,12 +226,26 @@ function operatorClick(e) {
     setOperator(e.key);
     convertOperator(operator);
   }
+
+  setExpressionTxt(`${n1} ${operator}`);
+  setInputNumberTxt(0);
   console.log({ n1, n2, result, operator });
 }
 
 function equalsClick(e) {
   if (!resultChecker && n2 !== "") {
+    if (n2 === "0" && operator === "÷") {
+      alert("You can't divide by 0.");
+      clearAll();
+      return;
+    }
+
     operate(+n1, +n2, operator);
+
+    roundAndExponential(operator);
+
+    setExpressionTxt(`${n1} ${operator} ${n2} =`);
+    setInputNumberTxt(result);
 
     setN1("");
     setN2("");
@@ -319,6 +339,7 @@ function roundAndExponential(operator) {
   }
 }
 
+//FIXME:
 function pointClick(e) {
   if (temp.length < 13 && !temp.includes(".")) {
     if (temp === "") {
