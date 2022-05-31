@@ -9,6 +9,9 @@ TODO:
 2 - Refactoring di tutte le cose che sono doppie di n1 e n2, crei una funzione che prende un argomento value e poi quando andiamo a premere
 un tasto, in quella funzione a determinate condizioni con if che stanno già settati andremo a mettere la funzione che fa quel derterminato compito
 e come argomento andremo a settare il risultato dell'if, quindi n1 se rispetta le condizioni di n1 e n2 se rispetta le condizioni di n2
+
+Quelli da fare sarebbero (se non ricordi come fare, pensaci un po' e ti verrà, alla fine devi passare sempre e solo n1 o n2):
+  deleteClick(),numberClick(), pointClick() e mi sa, positive_negative();
 */
 
 // || COMPONENTS ||
@@ -158,28 +161,6 @@ function clearAll() {
   setInputNumberTxt(0);
 }
 
-// function numberClick(e) {
-//   if (result !== null) {
-//     setResult(null);
-//   }
-
-//   // FIXME:
-//   console.log({ n1, n2, temp, result, operator, resultChecker });
-
-//   // setExpressionTxt("");
-
-//   if (temp.length < 13) {
-//     //se result !== null cancella expression text
-//     if (e.type === "click") {
-//       temp += e.target.innerText;
-//     } else {
-//       temp += e.key;
-//     }
-
-//     setInputNumberTxt(temp);
-//   }
-// }
-
 function numberClick(e) {
   // Primo numero
   if (operator === "" && n1.length < 13) {
@@ -208,7 +189,6 @@ function numberClick(e) {
   if (resultChecker) {
     setResultChecker(false);
   }
-  console.log({ n1, n2, result, operator });
 }
 
 function operatorClick(e) {
@@ -233,7 +213,6 @@ function operatorClick(e) {
 
   setExpressionTxt(`${n1} ${operator}`);
   setInputNumberTxt(0);
-  console.log({ n1, n2, result, operator });
 }
 
 function equalsClick() {
@@ -255,86 +234,32 @@ function equalsClick() {
     setN2("");
     setOperator("");
     setResultChecker(true);
-    console.log(result);
-    console.log({ n1, n2, result, operator });
   }
 }
 
-// function operatorClick(e) {
-//   if (operator !== "" && !resultChecker) {
-//     setN1(result);
-//     equalsClick();
-//   }
-
-//   // Quando una stringa vuota viene trasformata in un numero, diventa 0
-//   if (n1 === "") {
-//     setN1(+temp);
-//   }
-
-//   setTemp("");
-//   setResultChecker(false);
-
-//   if (e.type === "click") {
-//     setOperator(e.target.innerText);
-//   } else {
-//     setOperator(e.key);
-//     convertOperator(operator);
-//   }
-
-//
-//   // setExpressionTxt(`${n1} ${operator}`);
-//   // setInputNumberTxt(0);
-// }
-
-// function equalsClick() {
-//
-
-//   if (temp !== "" && operator !== "") {
-//     setN2(+temp);
-
-//     if (n2 === 0 && operator === "÷") {
-//       alert("You can't divide by 0.");
-//       clearAll();
-//       return;
-//     }
-
-//     operate(n1, n2, operator);
-
-//     roundAndExponential(operator);
-
-//     setExpressionTxt(`${n1} ${operator} ${n2} =`);
-//     setInputNumberTxt(result);
-
-//     setN1("");
-//     setN2("");
-//     setTemp("");
-//     // setResult();
-//     // setOperator("");
-
-//     // Serve per aggiungere il +/- al result
-//     resultChecker = true;
-//   }
-// }
-// FIXME: il fatto che escono ancora numeri con la e se ci sono più di tot numeri dopo il punto
 function roundAndExponential(operator) {
   let stringResult = String(result);
 
-  if (stringResult.length > 12 && operator === "×") {
+  if (operator === "×") {
     // Arrotondiamo il numero se contiene il . dato che i numeri molto grandi hanno il . nel result
     if (stringResult.includes(".")) {
       setResult(Math.round(result * 1000) / 1000);
+      stringResult = String(result);
     }
 
     // Qui trasformiamo in un numero con la e (notazione scientifica)
-    setResult(result.toExponential(4));
-  } else if (stringResult.length > 12 && operator === "+") {
+    if (stringResult.length > 12) {
+      setResult(result.toExponential(4));
+    }
+  } else if (operator === "+") {
     // Per evitare che un n basso col . + n faccia un numero in notazione scientifica
     if (stringResult.includes(".")) {
       setResult(Math.round(result * 1000) / 1000);
+      stringResult = String(result);
     }
 
     // Rende il risultato in notazione scentifica
-    if (stringResult.indexOf("." > 3)) {
+    if (stringResult.length > 12) {
       setResult(result.toExponential(4));
     }
   } else if (stringResult.length > 12 && stringResult.includes(".")) {
@@ -342,19 +267,6 @@ function roundAndExponential(operator) {
     setResult(Math.round(result * 1000) / 1000);
   }
 }
-
-//FIXME:
-// function pointClick(e) {
-//   if (temp.length < 13 && !temp.includes(".")) {
-//     if (temp === "") {
-//       temp += "0" + e.target.innerText;
-//     } else {
-//       temp += e.target.innerText;
-//     }
-
-//     setInputNumberTxt(temp);
-//   }
-// }
 
 function pointClick() {
   if (operator === "" && n1.length < 13 && !n1.includes(".")) {
@@ -375,33 +287,6 @@ function pointClick() {
     setInputNumberTxt(n2);
   }
 }
-/*
-// Funziona per N1
-  if (operator === "" && n1.length > 0) {
-    let lastN = n1.length - 1;
-    setN1(n1.slice(0, lastN));
-
-    // Solo visivo
-    if (n1.length === 0) {
-      setInputNumberTxt(0);
-    } else {
-      setInputNumberTxt(n1);
-    }
-    // Funziona per N2
-  } else if (operator !== "" && n2.length > 0) {
-    let lastN = n2.length - 1;
-    setN2(n2.slice(0, lastN));
-
-    // Solo visivo
-    if (n2.length === 0) {
-      setInputNumberTxt(0);
-    } else {
-      setInputNumberTxt(n2);
-    }
-  }
-
-
-*/
 
 //FIXME:
 function positive_negative() {
