@@ -70,9 +70,8 @@ function keybordOperations(e) {
       clearAll();
       break;
 
-    //FIXME:
     case ".":
-      "cose";
+      pointClick();
       break;
     //FIXME:
     case "F9":
@@ -316,7 +315,7 @@ function equalsClick() {
 //     resultChecker = true;
 //   }
 // }
-
+// FIXME: il fatto che escono ancora numeri con la e se ci sono più di tot numeri dopo il punto
 function roundAndExponential(operator) {
   let stringResult = String(result);
 
