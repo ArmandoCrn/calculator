@@ -177,10 +177,18 @@ function clearAll() {
 // }
 
 function numberClick(e) {
-  if (operator === "") {
-    n1 += e.target.innerText;
-  } else {
-    n2 += e.target.innerText;
+  if (operator === "" && n1.length < 13) {
+    if (e.type === "click") {
+      n1 += e.target.innerText;
+    } else {
+      n1 += e.key;
+    }
+  } else if (operator !== "" && n2.length < 13) {
+    if (e.type === "click") {
+      n2 += e.target.innerText;
+    } else {
+      n2 += e.key;
+    }
   }
 
   if (result !== null) {
