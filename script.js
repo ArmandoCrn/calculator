@@ -1,11 +1,14 @@
 /*
 TODO:
 
-2 - Per la mappatura dei tasti, fai funzionare solo quelli che servono alla calcolatrice: i numeri da 0 a 9, ESC === AC, DELETE ARROW === DELETE.
+1 - Per la mappatura dei tasti, fai funzionare solo quelli che servono alla calcolatrice: i numeri da 0 a 9, ESC === AC, DELETE ARROW === DELETE.
   i segni matematici, e ENTER === uguale
 
   2.1 FIXME: Come tolgo l'alone di focus quando premo enter?
 
+2 - Refactoring di tutte le cose che sono doppie di n1 e n2, crei una funzione che prende un argomento value e poi quando andiamo a premere
+un tasto, in quella funzione a determinate condizioni con if che stanno già settati andremo a mettere la funzione che fa quel derterminato compito
+e come argomento andremo a settare il risultato dell'if, quindi n1 se rispetta le condizioni di n1 e n2 se rispetta le condizioni di n2
 */
 
 // || COMPONENTS ||
@@ -120,6 +123,7 @@ function setInputNumberTxt(txt) {
 }
 
 function deleteClick() {
+  // Funziona per N1
   if (operator === "" && n1.length > 0) {
     let lastN = n1.length - 1;
     setN1(n1.slice(0, lastN));
@@ -130,6 +134,7 @@ function deleteClick() {
     } else {
       setInputNumberTxt(n1);
     }
+    // Funziona per N2
   } else if (operator !== "" && n2.length > 0) {
     let lastN = n2.length - 1;
     setN2(n2.slice(0, lastN));
@@ -232,7 +237,7 @@ function operatorClick(e) {
   console.log({ n1, n2, result, operator });
 }
 
-function equalsClick(e) {
+function equalsClick() {
   if (!resultChecker && n2 !== "") {
     if (n2 === "0" && operator === "÷") {
       alert("You can't divide by 0.");
@@ -340,17 +345,65 @@ function roundAndExponential(operator) {
 }
 
 //FIXME:
-function pointClick(e) {
-  if (temp.length < 13 && !temp.includes(".")) {
-    if (temp === "") {
-      temp += "0" + e.target.innerText;
+// function pointClick(e) {
+//   if (temp.length < 13 && !temp.includes(".")) {
+//     if (temp === "") {
+//       temp += "0" + e.target.innerText;
+//     } else {
+//       temp += e.target.innerText;
+//     }
+
+//     setInputNumberTxt(temp);
+//   }
+// }
+
+function pointClick() {
+  if (operator === "" && n1.length < 13 && !n1.includes(".")) {
+    if (n1 === "") {
+      n1 += "0.";
     } else {
-      temp += e.target.innerText;
+      n1 += ".";
     }
 
-    setInputNumberTxt(temp);
+    setInputNumberTxt(n1);
+  } else if (operator !== "" && n2.length < 13 && !n2.includes(".")) {
+    if (n2 === "") {
+      n2 += "0.";
+    } else {
+      n2 += ".";
+    }
+
+    setInputNumberTxt(n2);
   }
 }
+/*
+// Funziona per N1
+  if (operator === "" && n1.length > 0) {
+    let lastN = n1.length - 1;
+    setN1(n1.slice(0, lastN));
+
+    // Solo visivo
+    if (n1.length === 0) {
+      setInputNumberTxt(0);
+    } else {
+      setInputNumberTxt(n1);
+    }
+    // Funziona per N2
+  } else if (operator !== "" && n2.length > 0) {
+    let lastN = n2.length - 1;
+    setN2(n2.slice(0, lastN));
+
+    // Solo visivo
+    if (n2.length === 0) {
+      setInputNumberTxt(0);
+    } else {
+      setInputNumberTxt(n2);
+    }
+  }
+
+
+*/
+
 //FIXME:
 function positive_negative() {
   //Per farlo funzionare regolarmente
