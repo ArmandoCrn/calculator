@@ -16,20 +16,7 @@
   --green: #52e088;
   --green-hover: #2fda71;
   --green-active: #0cd359;
-
-  /*
-  --color1: #e2592f;
-  --color2: #dd1964;
-  --color3: #0faee7;
-  --background: #f6f6f6;
-  --font: #222;
-  --border: #333;
-  --screen: #eee;
-  --calculator: #aaa;
-  --purple: #aaf;
-  --purple-hover: #99e;
-  --purple-active: #88d;
-  */
+  --body-bg: #77c9cc;
 }
 
 /*==========
@@ -53,7 +40,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100%;
-  background-color: var(--white);
+  background-color: var(--body-bg);
 }
 
 p {
