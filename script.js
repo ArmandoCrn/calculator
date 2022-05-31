@@ -86,7 +86,6 @@ function keybordOperations(e) {
 
 let n1 = "";
 let n2 = "";
-let temp = "";
 let result = null;
 let operator = "";
 let resultChecker = false;
@@ -97,10 +96,6 @@ function setN1(value) {
 
 function setN2(value) {
   n2 = value;
-}
-
-function setTemp(value) {
-  temp = value;
 }
 
 function setResult(value) {
@@ -124,7 +119,7 @@ function setInputNumberTxt(txt) {
 }
 
 function deleteTemp() {
-  // Equivale a (temp !== "" && temp), perche "" === false, e quindi quando conterrà qualcosa, diverrà true
+  //FIXME:
   if (temp) {
     let lastN = temp.length - 1;
     setTemp(temp.slice(0, lastN));
@@ -141,10 +136,9 @@ function deleteTemp() {
 function clearAll() {
   setN1("");
   setN2("");
-  setTemp("");
   setResult(null);
   setOperator("");
-  // setResultChecker(false);
+  setResultChecker(false);
 
   setExpressionTxt("");
   setInputNumberTxt(0);
@@ -173,82 +167,45 @@ function clearAll() {
 // }
 
 function numberClick(e) {
-  temp += e.target.innerText;
+  if (operator === "") {
+    n1 += e.target.innerText;
+  } else {
+    n2 += e.target.innerText;
+  }
 
-  console.log(temp);
+  if (result !== null) {
+    setResult(null);
+  }
+
+  if (resultChecker) {
+    setResultChecker(false);
+  }
   console.log({ n1, n2, temp, result, operator });
 }
 
 function operatorClick(e) {
-  if (resultChecker) {
-    setN1(result);
-
-    console.log(n2);
-    setResultChecker(false);
-  } else {
-    // FIXME: Funziona la concatenazione di operazioni quando si fa con uguale, ma quando fai
-    // 3+3 + 5 + 8, non funziona, capisci perchè.
-    if (n1 === "") {
-      setN1(+temp);
-    } else if (n2 === "") {
-      setN2(+temp);
-    }
-
-    if (n1 !== "" && n2 !== "") {
-      equalsClick();
-      setN1(result);
-    }
+  if (n1 !== "" && n2 !== "") {
+    equalsClick();
   }
 
-  setTemp("");
-  setOperator(e.target.innerText);
+  if (result !== null) {
+    setN1(result);
+  }
 
-  console.log(operator);
+  setOperator(e.target.innerText);
   console.log({ n1, n2, temp, result, operator });
 }
 
-// function operatorClick(e) {
-//   if (n1 === "") {
-//     setN1(+temp);
-//   } else if (n2 === "") {
-//     setN2(+temp);
-//   }
-
-//   if (n2 !== "") {
-//     //Per prendere il risultato e continuare ad operare
-//     if (result !== null) {
-//       setN1(result);
-//       equalsClick();
-
-//       console.log("2.0");
-//     } else {
-//       // Per multiple operazioni concatenate e non abbiamo già fatto un operazione che finisse con uguale
-//       equalsClick();
-//       console.log("2.1");
-//     }
-//   }
-
-// FIXME: problema 1: quando cambiamo operatore scompare tutto
-// }
-
-// CASO 1 - Uguale subito dopo
-
-function equalsClick() {
-  if (!resultChecker) {
-    setN2(+temp);
-    setTemp("");
-    setResultChecker(true);
-
-    operate(n1, n2, operator);
+function equalsClick(e) {
+  if (!resultChecker && n2 !== "") {
+    operate(+n1, +n2, operator);
 
     setN1("");
     setN2("");
-    setTemp("");
     setOperator("");
+    setResultChecker(true);
     console.log(result);
     console.log({ n1, n2, temp, result, operator });
-  } else {
-    //
   }
 }
 
