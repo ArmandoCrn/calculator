@@ -1,10 +1,6 @@
 /*
 TODO:
 
-1 - Per la mappatura dei tasti, fai funzionare solo quelli che servono alla calcolatrice: i numeri da 0 a 9, ESC === AC, DELETE ARROW === DELETE.
-  i segni matematici, e ENTER === uguale
-
-  2.1 FIXME: Come tolgo l'alone di focus quando premo enter?
 
 2 - Refactoring di tutte le cose che sono doppie di n1 e n2, crei una funzione che prende un argomento value e poi quando andiamo a premere
 un tasto, in quella funzione a determinate condizioni con if che stanno già settati andremo a mettere la funzione che fa quel derterminato compito
@@ -265,7 +261,7 @@ function roundAndExponential(operator) {
     if (stringResult.length > 12) {
       setResult(result.toExponential(4));
     }
-  } else if (stringResult.length > 12 && stringResult.includes(".")) {
+  } else if (stringResult.length > 10 && stringResult.includes(".")) {
     // Invece qui si tratta se sono divisioni o sottrazioni, arrotondiamo solamente
     setResult(Math.round(result * 1000) / 1000);
   }
