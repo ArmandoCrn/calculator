@@ -1,15 +1,3 @@
-/*
-TODO:
-
-
-2 - Refactoring di tutte le cose che sono doppie di n1 e n2, crei una funzione che prende un argomento value e poi quando andiamo a premere
-un tasto, in quella funzione a determinate condizioni con if che stanno già settati andremo a mettere la funzione che fa quel derterminato compito
-e come argomento andremo a settare il risultato dell'if, quindi n1 se rispetta le condizioni di n1 e n2 se rispetta le condizioni di n2
-
-Quelli da fare sarebbero (se non ricordi come fare, pensaci un po' e ti verrà, alla fine devi passare sempre e solo n1 o n2):
-  deleteClick(),numberClick(), pointClick() e mi sa, positive_negative();
-*/
-
 // || COMPONENTS ||
 const expression = document.querySelector("#expression");
 const inputNumber = document.querySelector("#input-number");
@@ -86,7 +74,6 @@ function setInputNumberTxt(txt) {
 }
 
 function keybordOperations(e) {
-  //FIXME:
   e.preventDefault();
 
   if (e.key >= 0 && e.key <= 9) {
@@ -161,7 +148,7 @@ function clearAll() {
 }
 
 function numberClick(e) {
-  // Primo numero
+  // Funziona per N1
   if (operator === "" && n1.length < 13) {
     if (e.type === "click") {
       n1 += e.target.innerText;
@@ -170,7 +157,7 @@ function numberClick(e) {
     }
 
     setInputNumberTxt(n1);
-    // Secondo numero
+    // Funziona per N2
   } else if (operator !== "" && n2.length < 13) {
     if (e.type === "click") {
       n2 += e.target.innerText;
