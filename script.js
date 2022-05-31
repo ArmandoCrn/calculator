@@ -76,9 +76,9 @@ function keybordOperations(e) {
     case ".":
       pointClick();
       break;
-    //FIXME:
+
     case "F9":
-      console.log("oauhydsgf");
+      positive_negative();
       break;
 
     case "+":
@@ -94,7 +94,6 @@ let n2 = "";
 let result = null;
 let operator = "";
 let resultChecker = false;
-//FIXME: Per ora il resultChecker non viene utilizzato da nessuna parte, se resta così fino alla fine, toglilo
 
 function setN1(value) {
   n1 = value;
@@ -269,6 +268,7 @@ function roundAndExponential(operator) {
 }
 
 function pointClick() {
+  // Funziona per N1
   if (operator === "" && n1.length < 13 && !n1.includes(".")) {
     if (n1 === "") {
       n1 += "0.";
@@ -277,6 +277,8 @@ function pointClick() {
     }
 
     setInputNumberTxt(n1);
+
+    // Funziona per N2
   } else if (operator !== "" && n2.length < 13 && !n2.includes(".")) {
     if (n2 === "") {
       n2 += "0.";
@@ -288,30 +290,41 @@ function pointClick() {
   }
 }
 
-//FIXME:
 function positive_negative() {
-  //Per farlo funzionare regolarmente
-  if (temp !== "") {
-    if (!temp.includes("-")) {
-      setTemp("-" + temp);
-    } else if (temp.includes("-")) {
-      setTemp(temp.replace("-", ""));
-    }
-
-    setInputNumberTxt(temp);
-  } else if (resultChecker) {
-    // Trasformiamo il risultato +/-, grazie al resultChecker, ma funziona solo una volta
-    setN1(String(n1));
-    resultChecker = false;
-
+  // Funziona per N1
+  if (operator === "" && n1 !== "") {
     if (!n1.includes("-")) {
       setN1("-" + n1);
     } else if (n1.includes("-")) {
       setN1(n1.replace("-", ""));
     }
 
-    setN1(+n1);
     setInputNumberTxt(n1);
+
+    // Funziona per N2
+  } else if (operator !== "" && n2 !== "") {
+    if (!n2.includes("-")) {
+      setN2("-" + n2);
+    } else if (n2.includes("-")) {
+      setN2(n2.replace("-", ""));
+    }
+
+    setInputNumberTxt(n2);
+
+    // Trasformiamo il risultato
+  } else if (result !== null) {
+    let stringResult = String(result);
+
+    if (!stringResult.includes("-")) {
+      setResult("-" + stringResult);
+    } else if (stringResult.includes("-")) {
+      setResult(stringResult.replace("-", ""));
+    }
+
+    // Andiamo ad evitare eventuali bug visivi
+    if (n1 === "") {
+      setInputNumberTxt(result);
+    }
   }
 }
 
