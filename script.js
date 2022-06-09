@@ -151,8 +151,11 @@ function numberClick(e) {
   // Funziona per N1
   if (operator === "" && n1.length < 13) {
     if (e.type === "click") {
+      if (n1 === "" && e.target.innerText === "0") return;
       n1 += e.target.innerText;
     } else {
+      if (n1 === "" && e.key === "0") return;
+
       n1 += e.key;
     }
 
@@ -160,8 +163,11 @@ function numberClick(e) {
     // Funziona per N2
   } else if (operator !== "" && n2.length < 13) {
     if (e.type === "click") {
+      if (n2 === "" && e.target.innerText === "0") return;
       n2 += e.target.innerText;
     } else {
+      if (n2 === "" && e.key === "0") return;
+
       n2 += e.key;
     }
 
